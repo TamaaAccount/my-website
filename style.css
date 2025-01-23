@@ -1,0 +1,118 @@
+/* Background Galaxy */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: url('https://i.supa.codes/ypgq7') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    line-height: 1.4;
+}
+
+/* Header */
+header {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    background-color: rgba(0, 123, 255, 0.8);
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.menu-icon {
+    position: absolute;
+    top: 35px;
+    right: 60px;
+    font-size: 2.0rem;
+    cursor: pointer;
+    color: white;
+}
+
+/* Navigation Menu */
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    display: block;
+}
+
+nav.hidden {
+    display: none;
+}
+
+nav {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    padding: 10px;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    z-index: 1000;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Section Styles */
+.section {
+    padding: 20px;
+    margin: 20px auto;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    color: white;
+    max-width: 800px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.section ul {
+    padding-left: 20px;
+    list-style: disc;
+}
+
+/* Galeri Foto */
+#galeri {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    padding: 60px 20px;
+}
+
+#galeri img {
+    width: 90%;
+    max-width: 350px;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    margin: 0 auto 40px auto;
+    transform: translateX(30px);
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    #galeri img {
+        max-width: 95%;
+        transform: translateX(15px);
+    }
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 5px;
+    background: #333;
+    color: white;
+    margin-top: 10px;
+}
