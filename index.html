@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>./1tsM3T4maa</title>
+</head>
+<body>
+  <h1>Welcome!</h1>
+  <p>Situs ini akan melacak informasi Anda.</p>
+
+  <script>
+    fetch("/api/track")
+      .then(response => response.json())
+      .then(data => console.log("Server:", data))
+      .catch(error => console.error("Gagal mengambil data:", error));
+  </script>
+</body>
+</html>
